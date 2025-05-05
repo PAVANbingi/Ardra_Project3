@@ -1,0 +1,43 @@
+<div class="container my-4">
+  <!-- Page heading -->
+  <h2 class="text-center mb-4">🚗 Overview & Features</h2>
+
+  <!-- Filter and Sort bar -->
+  <div class="d-flex justify-content-between mb-3 flex-wrap gap-3">
+    <app-product-filter (searchChanged)="updateSearch($event)"></app-product-filter>
+
+    <app-product-sort (sortChanged)="onSortChange($event)"></app-product-sort>
+  </div>
+
+  <!-- Product count -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-muted">
+      Showing {{ paginatedProducts.length }} of {{ filteredCount }} products
+    </span>
+  </div>
+
+  <!-- Product grid -->
+  <div class="row g-4">
+    <ng-container *ngIf="paginatedProducts.length; else noResults">
+      <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let product of paginatedProducts">
+        <app-product-item [product]="product"></app-product-item>
+      </div>
+    </ng-container>
+
+    <ng-template #noResults>
+      <div class="col-12 text-center">
+        <p class="text-danger fw-semibold">
+          No products found. Please adjust your search.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Pagination -->
+  <app-pagination
+    [totalItems]="filteredCount"
+    [itemsPerPage]="itemsPerPage"
+    [currentPage]="currentPage"
+    (pageChanged)="onPageChange($event)">
+  </app-pagination>
+</div>

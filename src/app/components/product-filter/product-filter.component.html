@@ -1,0 +1,13 @@
+<!-- Search box with Bootstrap styling -->
+<div class="input-group mb-3">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search products by brand, model, type..."
+    [(ngModel)]="searchText"
+    (input)="onSearchChange()"
+  />
+  <button class="btn btn-outline-secondary " type="button" (click)="resetSearch()">
+    Clear
+  </button>
+</div>

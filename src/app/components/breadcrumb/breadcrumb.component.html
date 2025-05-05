@@ -1,0 +1,19 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li
+      *ngFor="let crumb of breadcrumbs; let isLast = last"
+      class="breadcrumb-item"
+      [ngClass]="{ 'active': isLast }"
+      [attr.aria-current]="isLast ? 'page' : null"
+    >
+      <ng-container *ngIf="!isLast; else lastCrumb">
+        <a [href]="crumb.url" class="text-decoration-none">
+          {{ crumb.label }}
+        </a>
+      </ng-container>
+      <ng-template #lastCrumb>
+        {{ crumb.label }}
+      </ng-template>
+    </li>
+  </ol>
+</nav>

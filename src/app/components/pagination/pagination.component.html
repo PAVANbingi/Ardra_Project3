@@ -1,0 +1,33 @@
+<nav *ngIf="totalPages > 1" aria-label="Pagination navigation">
+  <ul class="pagination justify-content-center">
+
+    <!-- Previous -->
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <button class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+        «
+      </button>
+    </li>
+
+    <!-- Page Numbers -->
+    <li *ngFor="let page of paginationRange" class="page-item">
+      <ng-container *ngIf="page !== '…'; else dots">
+        <button class="page-link"
+                [class.active]="page === currentPage"
+                (click)="changePage(page)">
+          {{ page }}
+        </button>
+      </ng-container>
+      <ng-template #dots>
+        <button class="page-link" disabled>…</button>
+      </ng-template>
+    </li>
+
+    <!-- Next -->
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <button class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+        »
+      </button>
+    </li>
+
+  </ul>
+</nav>
