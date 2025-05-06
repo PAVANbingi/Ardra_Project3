@@ -1,3 +1,4 @@
+// import { Product } from 'path-to-your-model';
 import { Component, Input } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
@@ -10,4 +11,23 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductItemComponent {
   @Input() product!: Product;
+
+  viewDetails(urlType: 'wiki' | 'official') {
+    if (urlType === 'wiki') {
+      window.open(this.product.wikiUrl, '_blank');
+    } else {
+      window.open(this.product.officialUrl, '_blank');
+    }
+  }
+
+  visitSite(urlType: 'officialUrl') {
+    if (urlType === 'officialUrl') {
+      window.open(this.product.officialUrl, '_blank');
+    }
+  }
+
+
+
+
+
 }

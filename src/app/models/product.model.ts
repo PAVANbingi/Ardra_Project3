@@ -10,4 +10,6 @@ export interface Product {
   transmission: 'Manual' | 'Automatic';
   color: string;
   imageUrl: string;
+  wikiUrl: string;
+  officialUrl: string;
 }
