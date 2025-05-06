@@ -3,10 +3,17 @@
   <h2 class="text-center mb-4">🚗 Overview & Features</h2>
 
   <!-- Filter and Sort bar -->
+
+  <!-- you should add this sortby body component here  -->
+  <!-- Filter and Sort bar -->
   <div class="d-flex justify-content-between mb-3 flex-wrap gap-3">
     <app-product-filter (searchChanged)="updateSearch($event)"></app-product-filter>
 
+    <!-- Existing Product Sort dropdown -->
     <app-product-sort (sortChanged)="onSortChange($event)"></app-product-sort>
+
+    <!-- New Sort by Body Type dropdown -->
+    <app-product-sort-by-body (sortChanged)="onBodyTypeSortChange($event)"></app-product-sort-by-body>
   </div>
 
   <!-- Product count -->

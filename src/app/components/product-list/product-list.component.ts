@@ -103,6 +103,7 @@ import { ProductSortComponent } from '../product-sort/product-sort.component';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { SortPipe } from '../../pipes/sort.pipe';
+import { ProductSortByBodyTypeComponent } from '../product-sort-by-body/product-sort-by-body.component';
 
 @Component({
   selector: 'app-product-list',
@@ -115,7 +116,8 @@ import { SortPipe } from '../../pipes/sort.pipe';
     ProductItemComponent,
     ProductFilterComponent,
     PaginationComponent,
-    ProductSortComponent
+    ProductSortComponent,
+    ProductSortByBodyTypeComponent
   ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
@@ -124,8 +126,9 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   searchText: string = '';
   selectedSort: string = '';
+  selectedBodyTypeSort: string = '';
 
-  itemsPerPage = 8;
+  itemsPerPage = 44;
   currentPage = 1;
 
   constructor(private productService: ProductService) {}
@@ -144,58 +147,38 @@ export class ProductListComponent implements OnInit {
     this.currentPage = 1;
   }
 
-  // get sortedProducts(): Product[] {
-  //   const sorted = [...this.products];
-  //   switch (this.selectedSort) {
-  //     case 'price-asc':
-  //       return sorted.sort((a, b) => a.price - b.price);
-  //     case 'price-desc':
-  //       return sorted.sort((a, b) => b.price - a.price);
-  //     case 'brand-asc':
-  //       return sorted.sort((a, b) => a.brand.localeCompare(b.brand));
-  //     case 'brand-desc':
-  //       return sorted.sort((a, b) => b.brand.localeCompare(a.brand));
-  //     case 'release-newest':
-  //       return sorted.sort((a, b) =>
-  //         new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-  //       );
-  //     case 'release-oldest':
-  //       return sorted.sort((a, b) =>
-  //         new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime()
-  //       );
-  //     default:
-  //       return sorted;
-  //   }
-  // }
+  onBodyTypeSortChange(bodyType: string): void {
+    this.selectedBodyTypeSort = bodyType;
+    this.currentPage = 1;
+  }
 
+  get filteredAndSortedProducts(): Product[] {
+    let filtered = this.products;
 
+    // Apply body type filter
+    if (this.selectedBodyTypeSort) {
+      filtered = filtered.filter(product =>
+        product.bodyType.toLowerCase() === this.selectedBodyTypeSort.toLowerCase()
+      );
+    }
 
+    // Apply search filter
+    filtered = new SearchPipe().transform(filtered, this.searchText);
 
-// you can also remove pagination if you need
+    // Apply general sort
+    filtered = new SortPipe().transform(filtered, this.selectedSort);
+
+    return filtered;
+  }
 
   get paginatedProducts(): Product[] {
-    // const filtered = new SearchPipe().transform(this.sortedProducts, this.searchText);
-    const filtered = new SearchPipe().transform(
-      new SortPipe().transform(this.products, this.selectedSort),
-      this.searchText
-    );
-
     const start = (this.currentPage - 1) * this.itemsPerPage;
-    return filtered.slice(start, start + this.itemsPerPage);
+    return this.filteredAndSortedProducts.slice(start, start + this.itemsPerPage);
   }
 
-
-
-  // get filteredCount(): number {
-  //   return new SearchPipe().transform(this.sortedProducts, this.searchText).length;
-  // }
   get filteredCount(): number {
-    return new SearchPipe().transform(
-      new SortPipe().transform(this.products, this.selectedSort),
-      this.searchText
-    ).length;
+    return this.filteredAndSortedProducts.length;
   }
-
 
   onPageChange(page: number): void {
     this.currentPage = page;

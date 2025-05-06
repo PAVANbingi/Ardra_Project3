@@ -34,10 +34,17 @@
       <strong>Release Date:</strong> {{ product.releaseDate | date: 'mediumDate' }}
     </p>
 
-    <h6 class="mt-auto fw-bold text-primary">
+    <!-- <h6 class="mt-auto fw-bold text-primary">
       {{ product.price | currency }}
-    </h6>
+    </h6> -->
+
+     <!-- Price in INR -->
+     <h5 class="mt-auto text-success fw-bold">
+      ₹{{ product.price | number:'1.0-0' }}
+    </h5>
+
   </div>
+
 
   <!-- Card Footer -->
   <div class="card-footer bg-transparent border-top-0 text-center">

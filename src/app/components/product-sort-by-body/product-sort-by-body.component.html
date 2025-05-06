@@ -1,0 +1,25 @@
+<!-- Bootstrap-style dropdown for body type sorting -->
+<div class="mb-3">
+  <label for="sortBodyTypeSelect" class="form-label">Sort by Body Type:</label>
+  <select
+  id="sortBodyTypeSelect"
+  class="form-select"
+  [(ngModel)]="selectedSort"
+  (change)="onSortChange()"
+>
+  <option value="">Select Body Type Sort</option>
+  <option value="Electric SUV">Electric SUV</option>
+  <option value="Premium MPV">Premium MPV</option>
+  <option value="Luxury Car">Luxury Car</option>
+  <option value="Sports Car">Sports Car</option>
+  <option value="Roadster">Roadster</option>
+  <option value="MPV">MPV</option>
+  <option value="Crossover">Crossover</option>
+  <option value="Wagon/Estate">Wagon/Estate</option>
+  <option value="Convertible">Convertible</option>
+  <option value="Coupe">Coupe</option>
+  <option value="Compact SUV">Compact SUV</option>
+  <option value="Sedan">Sedan</option>
+  <option value="Hatchback">Hatchback</option>
+</select>
+</div>
